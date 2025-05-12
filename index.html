@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo: Festa da Padroeira</title>
+    <meta name="description" content="Sistema de bingo para festas da padroeira com gerenciador de eventos, gerador de cartelas e sorteio online.">
+    
+    <!-- CSS -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: hsl(36, 33%, 97%);
+        }
+        .bingo-app-container {
+            width: 100%;
+            min-height: 100vh;
+        }
+        #loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: hsl(33, 48%, 36%);
+        }
+        #loading h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: hsl(43, 78%, 52%);
+            margin-bottom: 0.5rem;
+        }
+        #loading h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+        #loading .spinner {
+            margin: 2rem auto;
+            width: 50px;
+            height: 50px;
+            border: 5px solid hsl(40, 42%, 80%);
+            border-radius: 50%;
+            border-top-color: hsl(33, 48%, 36%);
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lato:wght@400;700&family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bingo-app-container">
+        <div id="loading">
+            <h1>Bingo</h1>
+            <h2>Festa da Padroeira</h2>
+            <div class="spinner"></div>
+            <p>Carregando aplicação...</p>
+        </div>
+        <div id="root"></div>
+    </div>
+    
+    <!-- Load application assets -->
+    <script>
+        // Hide loading screen when app is loaded
+        window.addEventListener('DOMContentLoaded', function() {
+            const app = document.getElementById('root');
+            const loading = document.getElementById('loading');
+            
+            // Check if app is loaded every 100ms
+            const checkLoaded = setInterval(function() {
+                if (app.children.length > 0) {
+                    loading.style.display = 'none';
+                    clearInterval(checkLoaded);
+                }
+            }, 100);
+            
+            // Fallback - hide loading after 5 seconds anyway
+            setTimeout(function() {
+                loading.style.display = 'none';
+                clearInterval(checkLoaded);
+            }, 5000);
+        });
+    </script>
+    
+    <script type="module" src="./client/dist/assets/index.js"></script>
+    <link rel="stylesheet" href="./client/dist/assets/index.css">
+</body>
+</html>
